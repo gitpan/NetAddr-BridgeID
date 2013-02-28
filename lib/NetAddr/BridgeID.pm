@@ -1,15 +1,14 @@
 package NetAddr::BridgeID;
 
-our $VERSION = '0.96'; # VERSION
+our $VERSION = '0.97'; # VERSION
 # ABSTRACT: Object for BridgeIDs (priority/MAC combos)
 
 use sanity;
 use NetAddr::MAC;
 use Scalar::Util qw/blessed/;
-use Params::Util qw/_INSTANCEDOES/;
 
 use Moo;
-use MooX::Types::MooseLike::Base qw/Str/;
+use MooX::Types::MooseLike::Base qw/InstanceOf Str/;
 use MooX::Types::CLike qw/UShort/;
 
 has original => (
@@ -24,9 +23,7 @@ has priority => (
 );
 has mac_obj => (
    is       => 'ro',
-   isa      => sub {
-      die "Not a NetAddr::MAC object!" unless ( _INSTANCEDOES $_[0], 'NetAddr::MAC' );
-   },
+   isa      => InstanceOf['NetAddr::MAC'],
    required => 1,
    handles  => {
       (map { $_ => $_ } qw(
@@ -203,7 +200,7 @@ Brendan Byrd <BBYRD@CPAN.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Brendan Byrd.
+This software is Copyright (c) 2013 by Brendan Byrd.
 
 This is free software, licensed under:
 
